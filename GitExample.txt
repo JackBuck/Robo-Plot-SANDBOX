@@ -1,0 +1,11 @@
+Git Info
+
+1. Cloning a repository
+2. Icons
+3. Creating a branch
+4. Adding a file
+5. Committing a file
+6. Pushing a file
+7. Fetch / Pull
+8. Merging
+9. General good practice.
