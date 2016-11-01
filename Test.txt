@@ -1,3 +1,5 @@
 This is a file!
 
 Modified to proe issue linking.
+
+Making a change to prove issue can be closed via commite message I just got it worn the first time!
