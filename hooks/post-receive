@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo Checking out working copy...
+git reset --hard || echo ERROR: Could not reset the git repository during post-receive hook
+git checkout $1 || echo ERROR: Could not checkout first updated branch
