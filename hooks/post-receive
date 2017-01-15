@@ -1,18 +1,29 @@
 #!/bin/bash
+#
+# This hook is run after every update to the Robo-Plot-SANDBOX repository.
+# Its purpose is to checkout the branch just pushed.
+# 
+# It assumes a directory structure:
+# 
+# .
+# |-- Robo-Plot-SANDBOX/
+# |-- Robo-Plot-SANDBOX.git/
+#
+# where Robo-Plot-SANDBOX.git/ is a git directory and Robo-Plot-SANDBOX/ is the corresponding working directory.
+#
 
 echo Checking out working copy...
-
-# We reset the git repository in case we updated the current branch
-#git reset --hard || { echo ERROR: "Could not reset the git repository during post-receive hook"; exit 1; }
 
 working_tree=../Robo-Plot-SANDBOX
 gitdir=$working_tree.git
 
 cd $working_tree
-# Then checkout the first branch which was updated
+
 read oldref newref refname
 branchname=${refname#refs/heads/}
-git --work-tree=./ --git-dir=$gitdir checkout $branchname || { echo "ERROR: Could not checkout first updated branch ($branchname)"; exit 1; }
+
+git --work-tree=./ --git-dir=$gitdir checkout -f $branchname || { echo "ERROR: Could not checkout first updated branch ($branchname)"; exit 1; }
+git --work-tree=./ --git-dir=$gitdir clean -fd || { echo "ERROR: Could not clean the working tree"; exit 1; }
 
 cd $gitdir
 
