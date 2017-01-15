@@ -1,5 +1,19 @@
 #!/bin/bash
 
 echo Checking out working copy...
-git reset --hard || echo ERROR: Could not reset the git repository during post-receive hook
-git checkout $1 || echo ERROR: Could not checkout first updated branch
+
+# We reset the git repository in case we updated the current branch
+#git reset --hard || { echo ERROR: "Could not reset the git repository during post-receive hook"; exit 1; }
+
+working_tree=../Robo-Plot-SANDBOX
+gitdir=$working_tree.git
+
+cd $working_tree
+# Then checkout the first branch which was updated
+read oldref newref refname
+branchname=${refname#refs/heads/}
+git --work-tree=./ --git-dir=$gitdir checkout $branchname || { echo "ERROR: Could not checkout first updated branch ($branchname)"; exit 1; }
+
+cd $gitdir
+
+exit 0
